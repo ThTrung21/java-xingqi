@@ -1,6 +1,6 @@
 
 package xingqi_java.GameLogic.Pieces;
-
+import xingqi_java.GameLogic.Move;
 /**
  * abstract class for all the different pieces on the board
  * @author TRUNG
