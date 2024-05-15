@@ -54,7 +54,7 @@ public class GameWindow extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        BoardPanel.setBackground(new java.awt.Color(0, 204, 0));
+        BoardPanel.setBackground(new java.awt.Color(204, 204, 204));
         BoardPanel.setMinimumSize(new java.awt.Dimension(700, 700));
         BoardPanel.setPreferredSize(new java.awt.Dimension(700, 700));
 
