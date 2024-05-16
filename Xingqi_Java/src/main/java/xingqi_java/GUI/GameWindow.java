@@ -28,6 +28,7 @@ public class GameWindow extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         BoardPanel = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
         TimePanel = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -58,15 +59,25 @@ public class GameWindow extends javax.swing.JFrame {
         BoardPanel.setMinimumSize(new java.awt.Dimension(700, 700));
         BoardPanel.setPreferredSize(new java.awt.Dimension(700, 700));
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 2, 48)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setText("Game's board");
+
         javax.swing.GroupLayout BoardPanelLayout = new javax.swing.GroupLayout(BoardPanel);
         BoardPanel.setLayout(BoardPanelLayout);
         BoardPanelLayout.setHorizontalGroup(
             BoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(BoardPanelLayout.createSequentialGroup()
+                .addGap(189, 189, 189)
+                .addComponent(jLabel7)
+                .addContainerGap(211, Short.MAX_VALUE))
         );
         BoardPanelLayout.setVerticalGroup(
             BoardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(BoardPanelLayout.createSequentialGroup()
+                .addGap(251, 251, 251)
+                .addComponent(jLabel7)
+                .addContainerGap(387, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -240,7 +251,7 @@ public class GameWindow extends javax.swing.JFrame {
 
         logheader.setMinimumSize(new java.awt.Dimension(300, 20));
         logheader.setPreferredSize(new java.awt.Dimension(300, 60));
-        logheader.setLayout(new java.awt.GridLayout());
+        logheader.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel6.setFont(new java.awt.Font("Courier New", 1, 36)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -357,6 +368,7 @@ public class GameWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;

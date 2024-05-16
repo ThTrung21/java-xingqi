@@ -15,9 +15,6 @@ public abstract class Piece {
         UP,
         DOWN
     }
-    /**
-     **constructors
-     **/
      public Piece(Side side) {
         this.side = side;
         this.captured = false;

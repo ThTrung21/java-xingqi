@@ -5,10 +5,8 @@ package xingqi_java.GameLogic;
 import xingqi_java.GameLogic.Pieces.*;
 
 /**
- * The Board class holds an 2D array with a bunch of point objects, which in turn carry the pieces. The board object is aware of it's pieces and can run checks
- * on things like if a move is legal by seeing if it leaves a player in check. It is basically the lowest level in the applicatoin.
- *
- * @author Venkat Pamulapati
+
+ * @author TRUNG
  */
 public class Board {
 
@@ -33,9 +31,7 @@ public class Board {
     private static int winner;
 
 
-    /**
-     * The default and only constructor creates a 2D array of Point objects and runs the initialize method (puts Pieces on the board)
-     */
+
     public Board() {
         winner = NA;
         gBoard = new Point[10][9];
@@ -43,16 +39,6 @@ public class Board {
 
     }
 
-
-    /**
-     * Tries a move by running it through move checker.
-     * Updates General Positions as member data
-     * Sees if the current player is in check after moving, if so, does not accept move
-     * If move is legal, then the board switches the current player and repaints the gui.
-     *
-     * @param move the attempting move
-     */
-    //HERE IS THE LAST FUNCTIONAL INSTANCE WHERE CHECKMATE WAS WORKING GREAT, AFTER THIS I STARTED ADDING ANDY'S STUFF.
     public boolean tryMove3(Move move, Player player) {
 
         if (new MoveTester(this, move).isLegal()) {
@@ -85,42 +71,25 @@ public class Board {
                     if (upCheck && curr.getSide() == Piece.Side.DOWN) {
                         if (checkMate(Piece.Side.UP)) {
                             winner = PLAYER1_WINS;
-//                            System.out.println("##########################CHECK MATE#############################");
-//                            System.out.println(player.getName() + "WINS!");
-//                            System.out.println("##########################CHECK MATE#############################");
                         }
-//                        return true;
-
-                        //the move is legal, now lets see if it's a winning move.
                     } else if (downCheck && curr.getSide() == Piece.Side.UP) {
                         if (checkMate(Piece.Side.DOWN)) {
-                            winner = PLAYER2_WINS;
-//                            System.out.println("##########################CHECK MATE#############################");
-//                            System.out.println(player.getName() + "WINS!");
-//                            System.out.println("##########################CHECK MATE#############################");
-                        }
-//                        return true;
 
-                        //the move is legal, now lets see if it's a stalemate
+                        }
+
+
+                        //the move is legal, check stalemate
                     } else if (curr.getSide() == Piece.Side.DOWN) {
                         if (checkMate(Piece.Side.UP) || separated()) {
                             winner = DRAW;
-//                            System.out.println("##########################STALE MATE#############################");
-//                            System.out.println("ITS A DRAW");
-//                            System.out.println("##########################STALE MATE#############################");
                         }
 //                        return true;
                     } else if (curr.getSide() == Piece.Side.UP) {
                         if (checkMate(Piece.Side.DOWN) || separated()) {
                             winner = DRAW;
-//                            System.out.println("##########################STALE MATE#############################");
-//                            System.out.println("ITS A DRAW");
-//                            System.out.println("##########################STALE MATE#############################");
                         }
 //                        return true;
                     }
-
-                    // if (!checkMate) {   //LEGAL MOVE AND NOT IN CHECKMATE?
                     System.out.println("Moved " + curr + " from (" + x + ", " + y + ") to (" + finalX + ", " + finalY + ")");
                     if (captured != null) {
                         //player.addPieceCaptured(captured);

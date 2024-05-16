@@ -135,20 +135,13 @@ public class MoveLogger {
              bw.write("Logged Moves: ");
              bw.newLine();
              bw.newLine();
-
-             //PLAYER 1 MOVES ================================================
-//             if (player1.getPlayerSide() == Piece.Side.DOWN) {          //player 1 is red, player2 is black
-//             bw.write(player1.getName() + " (Red Side), Time Elapsed: " + player1.printElapsedTime() + " ================");
-//             bw.newLine();
-//             } else {                                                   //player 1 is black, player2 is red
-//                 bw.write(player1.getName() + " (Black Side), Time Elapsed: " + player1.printElapsedTime() + " ================");
-//                 bw.newLine();
-//             }
-
-            //Goes through ArrayList and print every move
+        //player 1
             for (int i = 0; i < redMoveHistory.size(); i++) {
                 if (i < 9) {
-                    bw.write("Red   - Round 0" + (i + 1) + ": " + "Moved " + redMoveHistory.get(i).getPiece() + " from (" + redMoveHistory.get(i).getOriginX() + ", " + redMoveHistory.get(i).getOriginY() + ") to (" + redMoveHistory.get(i).getFinalX() + ", " + redMoveHistory.get(i).getFinalY() + ").");
+                    bw.write("Red   - Round 0" + (i + 1) + ": " + "Moved " + redMoveHistory.get(i).getPiece()
+                            + " from (" + redMoveHistory.get(i).getOriginX() + ", " 
+                            + redMoveHistory.get(i).getOriginY() + ") to (" + redMoveHistory.get(i).getFinalX() 
+                            + ", " + redMoveHistory.get(i).getFinalY() + ").");
                     if (redMoveHistory.get(i).getCapturedPiece() != null) {
                         bw.write(" Captured " + redMoveHistory.get(i).getCapturedPiece());
                         bw.newLine();
@@ -156,7 +149,9 @@ public class MoveLogger {
                         bw.newLine();
                     }
                 } else {
-                    bw.write("Red   - Round " + (i + 1) + ": " + "Moved " + redMoveHistory.get(i).getPiece() + " from (" + redMoveHistory.get(i).getOriginX() + ", " + redMoveHistory.get(i).getOriginY() + ") to (" + redMoveHistory.get(i).getFinalX() + ", " + redMoveHistory.get(i).getFinalY() + ").");
+                    bw.write("Red   - Round " + (i + 1) + ": " + "Moved " + redMoveHistory.get(i).getPiece() 
+                            + " from (" + redMoveHistory.get(i).getOriginX() + ", " + redMoveHistory.get(i).getOriginY() 
+                            + ") to (" + redMoveHistory.get(i).getFinalX() + ", " + redMoveHistory.get(i).getFinalY() + ").");
                     if (redMoveHistory.get(i).getCapturedPiece() != null) {
                         bw.write(" Captured " + redMoveHistory.get(i).getCapturedPiece());
                         bw.newLine();
@@ -165,17 +160,7 @@ public class MoveLogger {
                     }
                 }
             }
-
-            //PLAYER 2 MOVES ================================================
-            bw.newLine();
-//        if (player2.getPlayerSide() == Piece.Side.DOWN) {          //player 2 is red, player1 is black
-//            bw.write(player2.getName() + " (Red Side), Time Elapsed: " + player2.printElapsedTime() + " ================");
-//            bw.newLine();
-//        } else {                                                   //player 2 is black, player1 is red
-//            bw.write(player2.getName() + " (Black Side), Time Elapsed: " + player2.printElapsedTime() + " ================");
-//            bw.newLine();
-//        }
-            //Goes through ArrayList and print every move
+        //player 2
             for (int i = 0; i < blackMoveHistory.size(); i++) {
                 if (i < 9) {
                     bw.write("Black - Round 0" + (i + 1) + ": " + "Moved " + blackMoveHistory.get(i).getPiece() + " from (" + blackMoveHistory.get(i).getOriginX() + ", " + blackMoveHistory.get(i).getOriginY() + ") to (" + blackMoveHistory.get(i).getFinalX() + ", " + blackMoveHistory.get(i).getFinalY() + ").");
@@ -203,7 +188,7 @@ public class MoveLogger {
     }
 
     //Undo last move in game.
-     
+   
     public static Move undoLastMove(Board board) {
         int redCount = redMoveHistory.size();
         int blackCount = blackMoveHistory.size();

@@ -31,10 +31,7 @@ public class Point {
     private Piece piece;
     private riverSide side;
 
-    /**
-     * upRiver = player on top (player 2)
-     * downRiver = player on bottom (player 1)
-     */
+   
     enum riverSide {
         upRiver,
         downRiver

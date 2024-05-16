@@ -11,4 +11,5 @@
         <maven.compiler.target>21</maven.compiler.target>
         <exec.mainClass>xingqi_java.Xingqi_Java</exec.mainClass>
     </properties>
+    <name>Xingqi_Java</name>
 </project>
