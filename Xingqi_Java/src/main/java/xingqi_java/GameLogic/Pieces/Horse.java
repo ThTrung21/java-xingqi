@@ -21,7 +21,8 @@ public class Horse extends Piece {
         super.checkPattern(move);
 
         //constraint the Horse move
-        if (!((Math.abs(move.getDx()) == 1 && Math.abs(move.getDy()) == 2) || (Math.abs(move.getDx()) == 2 && Math.abs(move.getDy()) == 1))) {
+        if (!((Math.abs(move.getDx()) == 1 && Math.abs(move.getDy()) == 2) 
+                || (Math.abs(move.getDx()) == 2 && Math.abs(move.getDy()) == 1))) {
             move.setValid(false);
         }
     }

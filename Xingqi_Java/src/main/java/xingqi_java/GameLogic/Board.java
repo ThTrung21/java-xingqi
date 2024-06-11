@@ -119,7 +119,7 @@ public class Board {
 
 
     /**
-     * Physically executes a move by changing the pieces that are presnt on certian points.
+     * 
      *
      * @param move the specified move
      */
@@ -148,10 +148,7 @@ public class Board {
 
 
 
-    /**
-     * Scans the generals quarters to find their locations and update that data.
-     * Is generally called before testing procedured like check and checkMate
-     */
+
     void updateGenerals() {
         //finds location of generals
 
@@ -175,11 +172,7 @@ public class Board {
         }
     }
 
-    /**
-     * Scans the board to check if either general is in check.
-     * It works by trying to move every enemy piece to the friendly general and checking
-     * if the move is valid.
-     */
+
     private void testCheck() {
         updateGenerals();
         downCheck = false;
@@ -189,29 +182,22 @@ public class Board {
                 if (getPoint(x, y).getPiece() != null) {
 
                     if (!downCheck && getPoint(x, y).getPiece().getSide() == Piece.Side.UP) {
-                        if (new MoveTester(this, new Move(x, y, downGeneralX, downGeneralY), 0).isLegal()) {
+                        //if (new MoveTester(this, new Move(x, y, downGeneralX, downGeneralY), 0).isLegal()) {
                             downCheck = true;
 //                            System.out.println("Down is in check");
-                        }
+                        //}
                     } else if (!upCheck && getPoint(x, y).getPiece().getSide() == Piece.Side.DOWN) {
-                        if (new MoveTester(this, new Move(x, y, upGeneralX, upGeneralY), 0).isLegal()) {
+                        //if (new MoveTester(this, new Move(x, y, upGeneralX, upGeneralY), 0).isLegal()) {
                             upCheck = true;
 //                            System.out.println("up is in check");
-                        }
+                        //}
                     }
                 }
             }
         }
     }
 
-    /**
-     * Runs through the board trying every possible move for the passed in side, and if no moves result in leaving a check it returns true.
-     * <p>
-     * It also works for stalemate, since it is not dependent on the current status.
-     * We set the actually check for checkmate by seeing if this returns true and the player is already in check.
-     *
-     * @param loserSide the side that we suspect has lost.
-     */
+
     private boolean checkMate(Piece.Side loserSide) {
         updateGenerals();
 
@@ -256,7 +242,7 @@ public class Board {
     }
 
     /**
-     * Covers some edge cases where it is going to be guarantee stalmate like no pieces crossing rier.
+     * 
      *
      * @return true if we're at a stalemate from peices that can never cause checkmate
      */
@@ -287,18 +273,17 @@ public class Board {
 
 
     /**
-     * Sets up the board to play by placing all the pieces down as instantiated points. If there is no piece, it is set to null.
      *
      * @param board a board object to be initialized
      */
     private static void initialize(Point[][] board) {
         for (int y = 0; y < 10; y++) {
             for (int x = 0; x < 9; x++) {
-                board[y][x] = new Point(x, y); //weird but basically transposes for easier coding and visualization. x and y are coordinates if the origin was the top right of the gameboard.
+                board[y][x] = new Point(x, y);
             }
         }
 
-        //Chariots/Rook
+        //Chariots
         board[0][0].setPiece(new Chariot(Piece.Side.UP));
         board[0][8].setPiece(new Chariot(Piece.Side.UP));
 
@@ -312,21 +297,21 @@ public class Board {
         board[7][1].setPiece(new Cannon(Piece.Side.DOWN));
         board[7][7].setPiece(new Cannon(Piece.Side.DOWN));
 
-        //Horses/Knights
+        //Horses
         board[0][1].setPiece(new Horse(Piece.Side.UP));
         board[0][7].setPiece(new Horse(Piece.Side.UP));
 
         board[9][1].setPiece(new Horse(Piece.Side.DOWN));
         board[9][7].setPiece(new Horse(Piece.Side.DOWN));
 
-        //Elephants/bishops
+        //Elephants
         board[0][2].setPiece(new Elephant(Piece.Side.UP));
         board[0][6].setPiece(new Elephant(Piece.Side.UP));
 
         board[9][2].setPiece(new Elephant(Piece.Side.DOWN));
         board[9][6].setPiece(new Elephant(Piece.Side.DOWN));
 
-        //Guard/Advisors
+        //Guard/
         board[0][3].setPiece(new Guard(Piece.Side.UP));
         board[0][5].setPiece(new Guard(Piece.Side.UP));
 

@@ -47,7 +47,7 @@ class MoveTester {
             isAttack();
         }
 
-        //  3. Check if the path is clear, if not See if we're an attacking cannon or a non attacking cannon that can't move
+        //  3. Check if the path is clear
         if (legal) {
             obstacleStats();
 
@@ -81,49 +81,8 @@ class MoveTester {
 
     }
 
-    /**
-     * Test 2:
-     * the same as test 1 but doesnt check generals
-     * 
-     * @param board the current board object
-     * @param move  the move to be validated
-     * @param i     is just used to overload
-     */
-    MoveTester(Board board, Move move, int i) {
-        this.board = board;
-        this.move = move;
-        this.legal = true;
 
-        //   
-        CheckPiece();
-
-        //  
-        if (legal) {
-            isAttack();
-        }
-
-        //  
-
-        if (legal) {
-            obstacleStats();
-
-            if (!isClear) {
-                if (board.getPoint(move.getOriginX(), move.getOriginY()).getPiece().toString().equals("Cannon")) {
-                    if (!(obstacleCount == 1 && attack)) {
-                        legal = false;
-                    }
-                } else {
-                    legal = false;
-                }
-            } else {
-                if (board.getPoint(move.getOriginX(), move.getOriginY()).getPiece().toString().equals("Cannon")) {
-                    if (attack) {
-                        legal = false;
-                    }
-                }
-            }
-        }
-    }
+    
 
 
     /**
