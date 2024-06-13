@@ -153,12 +153,14 @@ public class StartFrame extends JFrame {
 
 
         //middle 
-        middle = new JPanel(new GridLayout(1, 1));
-
-        
-
-
-        //middle.add(middleLeftHolder);
+        middle = new JPanel(new GridLayout(0, 2));
+        JPanel middleLeftHolder = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
+        middleLeftHolder.add(bgColors);
+        middleLeftHolder.add(fgColors);
+        middleLeftHolder.add(lineColors);
+        JPanel middleRightHolder = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
+        middleRightHolder.add(ComboPanel);
+        middle.add(middleLeftHolder);
         middle.add(ComboPanel);
 
 
