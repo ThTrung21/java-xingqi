@@ -19,35 +19,35 @@ class MoveTester {
     private boolean legal;
 
     /**
-     * First test: 
-     * move pattern validation
-     * if its attacking move or not
-     * count obstacles to validate the move 
-     * if 2 generals facing each other
-     * 
+     * This is the deep checker. Upon instantiation it will:
+     * <ul>
+     *     <li>Check Move patter validity</li>
+     *     <li>Check if it's an attacking move or a movement move</li>
+     *     <li>Count the number of obstackles and determine if it's a legal move (ie Chariot can attack by jumping over one obstacle</li>
+     *     <li>Check if the generals are facing each other</li>
+     * </ul>
+     * <p>
+     * It differs from the shallow check because it checks generals, something not required for delivering check.
+     *
      * @param board the current board object
      * @param move  the move to be validated
      */
-    
-    
-    
-    
     MoveTester(Board board, Move move) {
         this.board = board;
         this.move = move;
         this.legal = true;
 
-        // check if movement pattern is legal 
+        //  1. first check if movement pattern is legal (ie horse moves 1 up 2 left)
         CheckPiece();
         Piece curr = board.getPoint(move.getOriginX(), move.getOriginY()).getPiece();
         Piece captured = board.getPoint(move.getFinalX(), move.getFinalY()).getPiece();
 
-        //  check if move is an attack + if the end point is blocked by friendly piece
+        //  2. check if we are doing an attack, and also check if the end point is blocked by a friendly piece
         if (legal) {
             isAttack();
         }
 
-        //  3. Check if the path is clear
+        //  3. Check if the path is clear, if not See if we're an attacking cannon or a non attacking cannon that can't move
         if (legal) {
             obstacleStats();
 
@@ -68,7 +68,7 @@ class MoveTester {
             }
         }
 
-        //post move check
+        //###########postmove checking##################
         if (legal) {
             board.doMove(move);
             if (!approveGenerals()) {
@@ -81,14 +81,61 @@ class MoveTester {
 
     }
 
+    /**
+     * This is the shallow checker. Upon instantiation it will:
+     * <ul>
+     *     <li>Check Move patter validity</li>
+     *     <li>Check if it's an attacking move or a movement move</li>
+     *     <li>Count the number of obstackles and determine if it's a legal move (ie Chariot can attack by jumping over one obstacle</li>
+     * </ul>
+     * <p>
+     * It differs from the deep check because it doesn't check generals, something not required for delivering check.
+     *
+     * @param board the current board object
+     * @param move  the move to be validated
+     * @param i     is just used to overload
+     */
+    MoveTester(Board board, Move move, int i) {
+        this.board = board;
+        this.move = move;
+        this.legal = true;
 
-    
+        //  1. first check if movement pattern is legal (ie horse moves 1 up 2 left)
+        CheckPiece();
+
+        //  2. check if we are doing an attack, and also check if the end point is blocked by a friendly piece
+        if (legal) {
+            isAttack();
+        }
+
+        //  3. Check if the path is clear, if not See if we're an attacking cannon or a non attacking cannon that can't move
+
+        if (legal) {
+            obstacleStats();
+
+            if (!isClear) {
+                if (board.getPoint(move.getOriginX(), move.getOriginY()).getPiece().toString().equals("Cannon")) {
+                    if (!(obstacleCount == 1 && attack)) {
+                        legal = false;
+                    }
+                } else {
+                    legal = false;
+                }
+            } else {
+                if (board.getPoint(move.getOriginX(), move.getOriginY()).getPiece().toString().equals("Cannon")) {
+                    if (attack) {
+                        legal = false;
+                    }
+                }
+            }
+        }
+    }
 
 
     /**
      * Returns that the generals aren't facing each other by counting the obstacles between them if they're in line.
      *
-     * @return True if they are facing each other (illegal)
+     * @return True if they are facing eachother (illegal)
      */
     private boolean approveGenerals() {
 
@@ -144,7 +191,7 @@ class MoveTester {
             if (origin == dest) {
                 this.attack = false;
                 this.legal = false;
-               
+                //this.isClear = false; //shouldn't matter because illegal anyway now
             }
         }
 
@@ -152,8 +199,8 @@ class MoveTester {
 
     /**
      * Finds out if there are obstacles, and if so, how many?
-     *  seeing if we have one obstacle for the cannon
-     * 
+     * Useful for seeing if we have one obstacle for the cannon
+     * Useful for seeing if a piece is blocked, handles knights as well.
      */
     private void obstacleStats() {
 

@@ -37,13 +37,6 @@ public class TurnTimerPanel extends JPanel {
 
     private int timeLimit;
 
-    /**
-     * Constructor that creates the timer gui and initialize variables.
-     *
-     * @param player1 the player playing the game
-     * @param player1 set this player's side on board
-     * @param profile profile of the game
-     */
     public TurnTimerPanel(Player player1, Player player2, Profile profile) {
 
         if (player1.getPlayerSide() == Piece.Side.DOWN) {  //Player1 is red
@@ -106,10 +99,6 @@ public class TurnTimerPanel extends JPanel {
 
     }
 
-    /**
-     * Update the red timer in the timer gui.
-     * Uses Thread to update asynchronously with game
-     */
     public void updateRedTime() {
 
         blackTimerLabel.setForeground(Color.LIGHT_GRAY);
@@ -121,9 +110,6 @@ public class TurnTimerPanel extends JPanel {
 
                 redTimerLabel.setText(redPlayer.elapsedTimeToString(timeLimit));
 
-                //For testing
-                //System.out.println(redPlayer.elapsedTimeToString());
-                //System.out.println(redPlayer.isTimerRunning());
 
             }
         });
@@ -133,10 +119,6 @@ public class TurnTimerPanel extends JPanel {
 
     }
 
-    /**
-     * Update the black timer in the timer gui.
-     * Uses Thread to update asynchronously with game
-     */
     public void updateBlackTime() {
 
         blackTimerLabel.setForeground(Color.BLACK);
@@ -147,9 +129,7 @@ public class TurnTimerPanel extends JPanel {
             while (blackPlayer.isTimerRunning()) {
                 blackTimerLabel.setText(blackPlayer.elapsedTimeToString(timeLimit));
 
-                //For testing
-                //System.out.println(blackPlayer.elapsedTimeToString());
-                //System.out.println(blackPlayer.isTimerRunning());
+
 
             }
         });

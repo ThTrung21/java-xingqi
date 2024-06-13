@@ -16,9 +16,9 @@ import java.awt.geom.Rectangle2D;
  */
 public class StartFrame extends JFrame {
 
-    private JPanel tippyTop, top, middle, bottom; //larger containers
-    private JPanel topLeftPanel, topRightPanel; //medium containers
-    private JPanel p1Colors, p2Colors, p1Names, p2Names, bgColors, timers, fgColors, lineColors; //basic containers
+    private JPanel TITLE, top, middle, bottom; 
+    private JPanel topLeftPanel, topRightPanel;
+    private JPanel p1Colors, p2Colors, p1Names, p2Names, bgColors, timers, fgColors, lineColors; 
     private JButton p1Chooser, p2Chooser, bgChooser, begin, loadGame, fgChooser, lineChooser;
     private JTextField p1Name, p2Name;
     private BoardFrame boardFrame;
@@ -28,50 +28,39 @@ public class StartFrame extends JFrame {
     private Image logo;
     private Profile profile;
 
-    /**
-     * instantiates the start menu.
-     *
-     * @param core the current core.
-     */
+
     public StartFrame(Core core) {
         super("Start Menu");
         this.setLayout(new GridLayout(4, 0));
         
-//        logo = new ImageIcon(getClass().getResource("resources/images/logo.png")).getImage();
-//        JLabel logoPic = new JLabel(new ImageIcon(logo.getScaledInstance(120, 120, 50)));
+        logo = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
+        JLabel logoPic = new JLabel(new ImageIcon(logo.getScaledInstance(120, 120, 50)));
 
 
-        //To make a theme make the profile, add it to the themes array, and a string to match in themes2
+       
         profile = new Profile();
-        Profile dark = new Profile(Color.magenta, new Color(0, 255, 132), Color.DARK_GRAY, Color.LIGHT_GRAY, Color.BLACK);
-        Profile light = new Profile(Color.pink, Color.LIGHT_GRAY, new Color(230, 216, 195), Color.white, Color.DARK_GRAY);
-        Profile minimal = new Profile(Color.LIGHT_GRAY, Color.LIGHT_GRAY, new Color(86, 86, 86), Color.BLACK, Color.white);
         Profile basic = new Profile();
 
         themes = new Profile[4];
         themes[0] = basic;
-        themes[1] = dark;
-        themes[2] = light;
-        themes[3] = minimal;
+
 
         String[] themes2 = new String[themes.length];
         themes2[0] = "Basic";
-        themes2[1] = "Dark";
-        themes2[2] = "Light";
-        themes2[3] = "Minimal";
+
 
         Font bigFont = new Font("Sans_Serif", Font.PLAIN, 40);
         Font mediumFont = new Font("Sans_Serif", Font.BOLD, 15);
 
 
-        //tippy top stuff
-        tippyTop = new JPanel(new GridLayout(0, 2));
+        //title
+        TITLE = new JPanel(new GridLayout(0, 2));
         JLabel rightTitle = new JLabel("Xiang Qi");
         rightTitle.setFont(bigFont);
         rightTitle.setHorizontalAlignment(SwingConstants.LEFT);
-//        logoPic.setHorizontalAlignment(SwingConstants.RIGHT);
-//        tippyTop.add(logoPic);
-        tippyTop.add(rightTitle);
+        logoPic.setHorizontalAlignment(SwingConstants.RIGHT);
+        TITLE.add(logoPic);
+        TITLE.add(rightTitle);
 
 
         //Player 1 stuff
@@ -121,9 +110,9 @@ public class StartFrame extends JFrame {
         topRightPanel.add(p2Names);
         topRightPanel.add(p2Colors);
 
-
+//====future update======
         //top panel stuff
-        top = new JPanel(new GridLayout(0, 2));
+        top = new JPanel(new GridLayout(1, 1));
         top.add(topLeftPanel);
         top.add(topRightPanel);
 
@@ -144,33 +133,32 @@ public class StartFrame extends JFrame {
         lineColors.add(new JLabel("             Line Colors"));
         lineChooser = new JButton("Select");
         lineColors.add(lineChooser);
+        
+//==========
 
 
-        //timer stuff
+        //timer 
         timers = new JPanel(new FlowLayout(FlowLayout.RIGHT, 30, 5));
-        timers.add(new JLabel("Time Limit"));
+        JLabel timeTitle=new JLabel("Time Limit");
+        timeTitle.setFont(mediumFont);
+        timers.add(timeTitle);
         minutes = new JSpinner(new SpinnerNumberModel(10, 1, 60, 1));
         timers.add(minutes);
-
-        //Theme Selector Stuff
-        JPanel ComboPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 60, 10));
+//Theme Selector 
+        JPanel ComboPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 1, 10));
         profileSelector = new JComboBox(themes2);
-        ComboPanel.add(new JLabel("Or select a default theme:"));
-        ComboPanel.add(profileSelector);
+
         ComboPanel.add(timers);
+        
 
 
-        //middle stuff
-        middle = new JPanel(new GridLayout(0, 2));
-        JPanel middleLeftHolder = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
-        middleLeftHolder.add(bgColors);
-        middleLeftHolder.add(fgColors);
-        middleLeftHolder.add(lineColors);
-        JPanel middleRightHolder = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 0));
-        middleRightHolder.add(ComboPanel);
+        //middle 
+        middle = new JPanel(new GridLayout(1, 1));
+
+        
 
 
-        middle.add(middleLeftHolder);
+        //middle.add(middleLeftHolder);
         middle.add(ComboPanel);
 
 
@@ -263,7 +251,7 @@ public class StartFrame extends JFrame {
         });
 
 
-        add(tippyTop);
+        add(TITLE);
         add(top);
         add(middle);
         add(bottom);

@@ -135,12 +135,6 @@ public class BoardPanel extends JPanel {
 		drawPoint(g2, board.getPoint(7, 7), 0, 360);
 	}
 
-	/**
-	 * marks the points that the soldiers go on at the start of the game
-	 * added the start and end angle arguments so I could draw the points on the edge
-	 *
-	 * @param g2
-	 */
 	private void drawPoint(Graphics2D g2, Point point, int startAngle, int endAngle) {
 		for (int x = startAngle / 90; x < endAngle / 90; x++) {
 			g2.drawLine(point.getX() + (int) (Math.cos(Math.toRadians(45 + 90 * x)) * squareWidth / 10),
@@ -153,11 +147,7 @@ public class BoardPanel extends JPanel {
 					point.getY() + (int) (Math.sin(Math.toRadians(45 + 90 * x)) * squareWidth / 10));
 		}
 	}
-	/**
-	 * Draws the word "river" on the river if the language is set to English
-	 *
-	 * @param g2
-	 */
+
 	private void drawRiver(Graphics2D g2) {
 		if (language.equals("English")) {
 			g2.setFont(new Font("Sans_Serif", Font.PLAIN, 18));
@@ -167,9 +157,7 @@ public class BoardPanel extends JPanel {
 			g2.drawString("River", xCoord, yCoord);
 		}
 	}
-	/**
-	 * Manually calls a repaint of every part of the object.
-	 */
+
 	public void userRepaint() {
 		repaint();
 		for (int y = 0; y < 10; y++) {
@@ -178,32 +166,21 @@ public class BoardPanel extends JPanel {
 			}
 		}
 	}
-	/**
-	 * Defines the JLabel that will exist on every point on the board.
-	 */
+	
 	private class Icons extends JLabel implements MouseListener {
 		private int x, y;
 		private Point point;
-		/**
-		 * Sets the index of the Icon and which point it will represent.
-		 *
-		 * @param x x position of the icon
-		 * @param y y position of the icon
-		 * @param point the point that is associated with the icon
-		 */
+
 		Icons(int x, int y, Point point) {
 			this.x = x;
 			this.y = y;
 			this.point = point;
 			setHorizontalAlignment(JLabel.CENTER);
 			setVerticalAlignment(JLabel.CENTER);
-			//if (point.getPiece() != null)
-			//	   setText(point.getPiece().toString());
+
 			addMouseListener(this);
 		}
-		/**
-		 * Changes the appearance of the pieces on the board.
-		 */
+
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
@@ -217,17 +194,12 @@ public class BoardPanel extends JPanel {
 				case "English":
 					createEnglishPieces(g2);
 					break;
-				case "Pictures":
-					setPieceImages(g2, "/Pictures/english_");
-					break;
-				case "Chinese":
-					setPieceImages(g2, "/Pictures/chinese_");
+				case "Original":
+					setPieceImages(g2, "/images/");
 					break;
 			}
 		}
-		/**
-		 * Draws each piece with the english name of the piece if the language is set to "English".
-		 */
+
 		void createEnglishPieces(Graphics2D g2) {
 			setIcon(null);
 			g2.setFont(new Font("Sans_Serif", Font.PLAIN, 12));
@@ -252,13 +224,7 @@ public class BoardPanel extends JPanel {
 				}
 			}
 		}
-		/**
-		 * Draws each piece with the image of the piece's chinese name if the language is set to "Chinese"
-		 * or with a picture of the piece if the language is set to "Pictures".
-		 *
-		 * @param g2
-		 * @param fileName the name of the png that will drawn on the JLabel
-		 */
+
 		void setPieceImages(Graphics2D g2, String fileName) {
 			try {
 				if (point.getPiece() != null) {
@@ -281,9 +247,7 @@ public class BoardPanel extends JPanel {
 				System.out.print(e);
 			}
 		}
-		/**
-		 * Checks if the user's click is selecting a piece or a destination for a selected piece.
-		 */
+
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (!pressed) {
@@ -294,8 +258,7 @@ public class BoardPanel extends JPanel {
 			//if a piece has been selected, perform this first block of code
 			else {
 				if (storeReleased()) {
-					//stores new pressed piece if the two locations have pieces that are on the same side
-					//so that you can choose a new piece without calling the move method
+					
 					if (board.getPoint(pressLoc[0], pressLoc[1]).getPiece() != null &&
 							board.getPoint(releaseLoc[0], releaseLoc[1]).getPiece() != null &&
 							(board.getPoint(pressLoc[0], pressLoc[1]).getPiece().getSide() ==
@@ -304,9 +267,7 @@ public class BoardPanel extends JPanel {
 					} else {
 						pressed = false;
 						sendMove(new Move(pressLoc[0], pressLoc[1], releaseLoc[0], releaseLoc[1]));
-						//board.tryMove(new Move(pressLoc[0], pressLoc[1],releaseLoc[0], releaseLoc[1]));
-//						System.out.println(pressLoc[0] + "," + pressLoc[1] + "," + releaseLoc[0] + "," + releaseLoc[1]);
-					}
+											}
 				}
 			}
 			for (int y = 0; y < 10; y++) {
@@ -327,8 +288,7 @@ public class BoardPanel extends JPanel {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			//System.out.println("Released: " +e.getX() + " " + e.getY());
-			//System.out.println("Released: " +x + " " + y);
+	
 		}
 
 		@Override
@@ -341,9 +301,7 @@ public class BoardPanel extends JPanel {
 			// TODO Auto-generated method stub
 
 		}
-		/**
-		 * Sends the move to be handled in the core class.
-		 */
+
 		void sendMove(Move move) {
 			core.playMove(move);
 		}
@@ -361,9 +319,7 @@ public class BoardPanel extends JPanel {
 			}
 			return false;
 		}
-		/**
-		 * Stores the location of the released piece.
-		 */
+
 		boolean storeReleased() {
 			if (pressIsValid) {
 				releaseLoc[0] = x;

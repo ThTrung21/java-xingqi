@@ -31,13 +31,25 @@ public class Board {
     private static int winner;
 
 
-
+    /**
+     * The default and only constructor creates a 2D array of Point objects and runs the initialize method (puts Pieces on the board)
+     */
     public Board() {
         winner = NA;
         gBoard = new Point[10][9];
         initialize(gBoard);
 
     }
+
+
+    /**
+     * Tries a move by running it through move checker.
+     * Updates General Positions as member data
+     * Sees if the current player is in check after moving, if so, does not accept move
+     * If move is legal, then the board switches the current player and repaints the gui.
+     *
+     * @param move the attempting move
+     */
 
     public boolean tryMove3(Move move, Player player) {
 
@@ -52,7 +64,7 @@ public class Board {
             int finalY = move.getFinalY();
 
 
-            if (true){//(curr.getSide() == player.getPlayerSide()) {
+            if (curr.getSide() == player.getPlayerSide()) {
                 doMove(move);
                 testCheck();
                 if (curr.getSide() == Piece.Side.UP && upCheck) {
@@ -71,38 +83,47 @@ public class Board {
                     if (upCheck && curr.getSide() == Piece.Side.DOWN) {
                         if (checkMate(Piece.Side.UP)) {
                             winner = PLAYER1_WINS;
+
                         }
+
+
+                        //the move is legal, now lets see if it's a winning move.
                     } else if (downCheck && curr.getSide() == Piece.Side.UP) {
                         if (checkMate(Piece.Side.DOWN)) {
+                            winner = PLAYER2_WINS;
 
                         }
+//                        return true;
 
-
-                        //the move is legal, check stalemate
+                        //the move is legal, now lets see if it's a stalemate
                     } else if (curr.getSide() == Piece.Side.DOWN) {
                         if (checkMate(Piece.Side.UP) || separated()) {
                             winner = DRAW;
+
                         }
 //                        return true;
                     } else if (curr.getSide() == Piece.Side.UP) {
                         if (checkMate(Piece.Side.DOWN) || separated()) {
                             winner = DRAW;
+
                         }
 //                        return true;
                     }
+
+                     //LEGAL MOVE AND NOT IN CHECKMATE
                     System.out.println("Moved " + curr + " from (" + x + ", " + y + ") to (" + finalX + ", " + finalY + ")");
                     if (captured != null) {
-                        //player.addPieceCaptured(captured);
+                        player.addPieceCaptured(captured);
                         System.out.println(captured + " Captured!");
                         MoveLogger.addMove(new Move(curr, captured, x, y, finalX, finalY));
                     } else {
                         MoveLogger.addMove(new Move(curr, x, y, finalX, finalY));
                     }
 
-                    //DO OTHER THINGS =============
+                   
 
                     return true;
-                    //   }
+                    
 
                 }
             } else {
@@ -119,7 +140,7 @@ public class Board {
 
 
     /**
-     * 
+     * Physically executes a move by changing the pieces that are presnt on certian points.
      *
      * @param move the specified move
      */
@@ -148,7 +169,10 @@ public class Board {
 
 
 
-
+    /**
+     * Scans the generals quarters to find their locations and update that data.
+     * Is generally called before testing procedured like check and checkMate
+     */
     void updateGenerals() {
         //finds location of generals
 
@@ -172,7 +196,11 @@ public class Board {
         }
     }
 
-
+    /**
+     * Scans the board to check if either general is in check.
+     * It works by trying to move every enemy piece to the friendly general and checking
+     * if the move is valid.
+     */
     private void testCheck() {
         updateGenerals();
         downCheck = false;
@@ -182,22 +210,29 @@ public class Board {
                 if (getPoint(x, y).getPiece() != null) {
 
                     if (!downCheck && getPoint(x, y).getPiece().getSide() == Piece.Side.UP) {
-                        //if (new MoveTester(this, new Move(x, y, downGeneralX, downGeneralY), 0).isLegal()) {
+                        if (new MoveTester(this, new Move(x, y, downGeneralX, downGeneralY), 0).isLegal()) {
                             downCheck = true;
 //                            System.out.println("Down is in check");
-                        //}
+                        }
                     } else if (!upCheck && getPoint(x, y).getPiece().getSide() == Piece.Side.DOWN) {
-                        //if (new MoveTester(this, new Move(x, y, upGeneralX, upGeneralY), 0).isLegal()) {
+                        if (new MoveTester(this, new Move(x, y, upGeneralX, upGeneralY), 0).isLegal()) {
                             upCheck = true;
 //                            System.out.println("up is in check");
-                        //}
+                        }
                     }
                 }
             }
         }
     }
 
-
+    /**
+     * Runs through the board trying every possible move for the passed in side, and if no moves result in leaving a check it returns true.
+     * <p>
+     * It also works for stalemate, since it is not dependent on the current status.
+     * We set the actually check for checkmate by seeing if this returns true and the player is already in check.
+     *
+     * @param loserSide the side that we suspect has lost.
+     */
     private boolean checkMate(Piece.Side loserSide) {
         updateGenerals();
 
@@ -242,7 +277,7 @@ public class Board {
     }
 
     /**
-     * 
+     * Covers some edge cases where it is going to be guarantee stalmate like no pieces crossing rier.
      *
      * @return true if we're at a stalemate from peices that can never cause checkmate
      */
@@ -273,17 +308,18 @@ public class Board {
 
 
     /**
+     * Sets up the board to play by placing all the pieces down as instantiated points. If there is no piece, it is set to null.
      *
      * @param board a board object to be initialized
      */
     private static void initialize(Point[][] board) {
         for (int y = 0; y < 10; y++) {
             for (int x = 0; x < 9; x++) {
-                board[y][x] = new Point(x, y);
+                board[y][x] = new Point(x, y); //weird but basically transposes for easier coding and visualization. x and y are coordinates if the origin was the top right of the gameboard.
             }
         }
 
-        //Chariots
+        //Chariots/Rook
         board[0][0].setPiece(new Chariot(Piece.Side.UP));
         board[0][8].setPiece(new Chariot(Piece.Side.UP));
 
@@ -297,21 +333,21 @@ public class Board {
         board[7][1].setPiece(new Cannon(Piece.Side.DOWN));
         board[7][7].setPiece(new Cannon(Piece.Side.DOWN));
 
-        //Horses
+        //Horses/Knights
         board[0][1].setPiece(new Horse(Piece.Side.UP));
         board[0][7].setPiece(new Horse(Piece.Side.UP));
 
         board[9][1].setPiece(new Horse(Piece.Side.DOWN));
         board[9][7].setPiece(new Horse(Piece.Side.DOWN));
 
-        //Elephants
+        //Elephants/bishops
         board[0][2].setPiece(new Elephant(Piece.Side.UP));
         board[0][6].setPiece(new Elephant(Piece.Side.UP));
 
         board[9][2].setPiece(new Elephant(Piece.Side.DOWN));
         board[9][6].setPiece(new Elephant(Piece.Side.DOWN));
 
-        //Guard/
+        //Guard/Advisors
         board[0][3].setPiece(new Guard(Piece.Side.UP));
         board[0][5].setPiece(new Guard(Piece.Side.UP));
 

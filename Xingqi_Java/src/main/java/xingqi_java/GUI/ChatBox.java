@@ -24,7 +24,9 @@ class ChatBox extends JPanel {
     public ChatBox(Core core) {
         JLabel title = new JLabel("Chat Log");
         systemOutput = new JTextArea(14, 18);
+        systemOutput.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(systemOutput, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+       
         add(title, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         systemOutput.setCaretPosition(systemOutput.getDocument().getLength());
@@ -43,21 +45,13 @@ class ChatBox extends JPanel {
         });
         add(endGameBtn, BorderLayout.SOUTH);
     }
-    /**
-     * Sets the text of the JTextArea as the same as the system outputted statements.
-     *
-     * @param text The text to be displayed in the chat box
-     */
+
     public void appendText(final String text) {
         systemOutput.setText(systemOutput.getText() + text);
     }
 }
 
-/**
- * Redirects the output stream of System.out to the board frame's chat box.
- *
- * @author Michael Yu
- */
+
 class StreamIntake extends OutputStream {
 
     private String string = "";

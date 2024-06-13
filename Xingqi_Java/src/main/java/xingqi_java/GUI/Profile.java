@@ -22,7 +22,8 @@ public class Profile {
     Profile() {
         p1Color = Color.RED;
         p2Color = Color.BLACK;
-        backGround = Color.lightGray;
+//        backGround = Color.lightGray;
+backGround = new Color(204,160,104);
         foreGround = new Color(245, 245, 220);
         p1String = "Player 1";
         p2String = "Player 2";

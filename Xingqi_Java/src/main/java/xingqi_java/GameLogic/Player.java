@@ -101,7 +101,7 @@ public class Player {
     /**
      * Get this player's name.
      *
-     * @return this oplayer's name
+     * @return this player's name
      */
     public String getName() {
         return this.name;
