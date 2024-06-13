@@ -33,6 +33,7 @@ public class Core {
      * Upon instantiation the start menu runs, which in turn starts everything else.
      */
     public Core() {
+//        System.out.print(getClass().getClassLoader().getResource("images/logo.png"));
         startFrame = new StartFrame(this);
     }
 

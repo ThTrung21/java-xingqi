@@ -10,7 +10,7 @@ package xingqi_java.run;
  */
 public class Play {
      public static void main(String[] args) {
-
+        
         Core core = new Core();
 
         //Core core2 = new Core();

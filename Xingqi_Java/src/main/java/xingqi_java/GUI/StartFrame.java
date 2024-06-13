@@ -33,7 +33,7 @@ public class StartFrame extends JFrame {
         super("Start Menu");
         this.setLayout(new GridLayout(4, 0));
         
-        logo = new ImageIcon(getClass().getResource("/images/logo.png")).getImage();
+        logo = new ImageIcon(getClass().getClassLoader().getResource("images/logo.png")).getImage();
         JLabel logoPic = new JLabel(new ImageIcon(logo.getScaledInstance(120, 120, 50)));
 
 
@@ -60,6 +60,7 @@ public class StartFrame extends JFrame {
         rightTitle.setHorizontalAlignment(SwingConstants.LEFT);
         logoPic.setHorizontalAlignment(SwingConstants.RIGHT);
         TITLE.add(logoPic);
+        
         TITLE.add(rightTitle);
 
 
